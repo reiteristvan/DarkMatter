@@ -45,24 +45,7 @@ package darkmatter.levels
 		
 		private function successFunction() : Boolean
 		{
-			var result:Boolean = false;
-			var target:int = 2;
-			
-			var i:int = 0;
-			for each(var entity:FlxEntity in entities)
-			{
-				if (entity.owner == 0 && entity.exists == false)
-				{
-					++i;
-				}
-			}
-			
-			if (i == target)
-			{
-				result = true;
-			}
-			
-			return result;
+			return allEnemyShipDead();
 		}
 		
 		private function failureFunction() : Boolean
