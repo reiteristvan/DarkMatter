@@ -12,6 +12,7 @@ package darkmatter.entities
 	{		
 		public var owner:int = 0;
 		public var param:String = "";
+		public var target:int = 0; // 0 == none, 1 == to player, -1 == to enemy
 		
 		// event handler for hover, function parameter is the object -> this
 		public var mouseOver:Function = null;

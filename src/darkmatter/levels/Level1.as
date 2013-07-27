@@ -17,6 +17,7 @@ package darkmatter.levels
 		public function Level1() 
 		{
 			this.isEnemyOnDefense = false;
+			this.isEnemyCanBuild = false;
 			this.motherPosition = new FlxPoint(2, 2);
 			this.startMoney = 1500;
 			this.startMetal = 300;
@@ -66,18 +67,7 @@ package darkmatter.levels
 		
 		private function failureFunction() : Boolean
 		{
-			var result:Boolean = false;
-			
-			for each(var entity:FlxEntity in entities)
-			{
-				if (entity.ID == 1 && entity.owner == 0 && entity.exists == false)
-				{
-					result = true;
-					break;
-				}
-			}
-			
-			return result;
+			return allPlayerShipDead();
 		}
 	}
 

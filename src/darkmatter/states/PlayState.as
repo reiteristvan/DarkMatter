@@ -1,6 +1,7 @@
 package darkmatter.states 
 {
 	import adobe.utils.CustomActions;
+	import darkmatter.ai.AIStrategy;
 	import darkmatter.entities.*;
 	import darkmatter.levels.Level1;
 	import darkmatter.states.partials.ControlPanel;
@@ -22,14 +23,14 @@ package darkmatter.states
 	public class PlayState extends FlxState 
 	{
 		public var Report:Function = null;
-		private var level:Level = null;
-		private var objects:FlxGrid = null;
-		private var ships:FlxGrid = null;
+		public var level:Level = null;
+		public var objects:FlxGrid = null;
+		public var ships:FlxGrid = null;
 		private var hud:FlxGroup = null;
 		private var controlPanel:ControlPanel = null;
 		private var infoPanel:InfoPanel = null;
 		private var hudTop:FlxSprite = null;
-		private var selectedShip:Ship = null;
+		public var selectedShip:Ship = null;
 		private var highLightSprite:FlxSprite = new FlxSprite();
 		private var isAITurn:Boolean = false;
 		private var movementGroup:FlxGroup = null;
@@ -239,19 +240,6 @@ package darkmatter.states
 				}
 			} 
 			
-			// create mothership
-			//var mother:Ship = Ship.create(Ship.MOTHERSHIP);
-			//mother.coordinate.x = level.motherPosition.x; mother.coordinate.y = level.motherPosition.y;
-			//mother.x = level.motherPosition.x * 32; mother.y = (level.motherPosition.y * 32) + 25;
-			//ships.add(mother);
-			
-			// enemy mothership
-			//var enemyMother:Ship = Ship.create(Ship.MOTHERSHIP);
-			//enemyMother.owner = 0;
-			//enemyMother.coordinate.x = 10; enemyMother.coordinate.y = 5;
-			//enemyMother.x = 10 * 32; enemyMother.y = (5 * 32) + 25;
-			//ships.add(enemyMother);
-			
 			Report("ENTITIES");
 			
 			startTurn();
@@ -359,54 +347,7 @@ package darkmatter.states
 		private function AIMove() : void
 		{
 			isAITurn = true;
-			
-			// get motherBoards
-			var mothers:Array = ships.all(function(enemy:FlxEntity) : Boolean
-			{
-				return enemy.ID == 1 && enemy.owner == 0;
-			});
-			
-			// get ships
-			var eships:Array = ships.all(function(enemy:FlxEntity) : Boolean
-			{
-				return enemy.owner == 0;
-			});
-			
-			// get player's ships
-			var fships:Array = ships.all(function(enemy:FlxEntity) : Boolean
-			{
-				return enemy.owner == 1;
-			});
-			
-			// move ships
-			// if enemy is defensive
-			if (level.isEnemyOnDefense)
-			{
-				// get ships near defended point
-				var p:Ship = null;
-				for each(var ss:Ship in fships)
-				{
-					if (distance(ss.coordinate, level.pointToDefend) < 3)
-					{
-						
-					}
-				}
-			}
-			else // offensive AI
-			{
-				// if there is a target(s)
-				if (level.pointsToOffense != null)
-				{
-					
-				}
-				else // random violence
-				{
-					// go and attack ship
-				}
-			}
-			
-			// build ships
-			
+			AIStrategy.move(this);
 			isAITurn = false;
 		}
 		
